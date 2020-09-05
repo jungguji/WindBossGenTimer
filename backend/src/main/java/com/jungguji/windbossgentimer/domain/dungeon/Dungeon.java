@@ -2,15 +2,21 @@ package com.jungguji.windbossgentimer.domain.dungeon;
 
 import com.jungguji.windbossgentimer.domain.gentime.GenTime;
 import com.jungguji.windbossgentimer.domain.user.User;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import org.springframework.util.Assert;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.time.LocalTime;
 import java.util.List;
 
 @Getter
-@RequiredArgsConstructor
 @Entity
 public class Dungeon {
 
@@ -18,15 +24,30 @@ public class Dungeon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private final String name;
+    private final Integer mainChannel;
+    private final Integer subChannel;
+    private LocalTime killTime;
+
     @ManyToOne
     @JoinColumn(name="user_id")
     private final User user;
 
     @OneToMany(mappedBy = "dungeon")
-    private final List<GenTime> genTimes;
+    private List<GenTime> genTimes;
 
-    private final Integer mainChannel;
-    private final Integer subChannel;
-    private LocalTime killTime;
+    @Builder
+    public Dungeon(String name, Integer mainChannel, Integer subChannel, User user, List<GenTime> genTimes) {
+        Assert.notNull(name, "name is required");
+        Assert.notNull(mainChannel, "main channel is required");
+        Assert.notNull(subChannel, "sub channel is required");
+        Assert.notNull(user, "user is required");
+
+        this.name = name;
+        this.mainChannel = mainChannel;
+        this.subChannel = subChannel;
+        this.user = user;
+        this.genTimes = genTimes;
+    }
 
 }
