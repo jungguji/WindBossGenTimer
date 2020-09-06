@@ -1,5 +1,7 @@
 # WindBossGenTimer
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6571ef76c3b34659bdbe318e46f0e4ff)](https://app.codacy.com/manual/jungguji/WindBossGenTimer?utm_source=github.com&utm_medium=referral&utm_content=jungguji/WindBossGenTimer&utm_campaign=Badge_Grade_Dashboard)
+
 바람의나라 연 보스 별 젠 타이머
 
 * * *
