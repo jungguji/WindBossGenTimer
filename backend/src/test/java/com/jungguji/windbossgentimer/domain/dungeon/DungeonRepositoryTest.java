@@ -29,7 +29,7 @@ class DungeonRepositoryTest {
 
     User user;
     String email = "test@gmail.com";
-    String pw = "pwpwpw";
+    String pw = "password";
 
     String dungeonName1 = "유령굴";
     String dungeonName2 = "산적굴";
