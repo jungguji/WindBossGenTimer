@@ -68,7 +68,7 @@ class DungeonRepositoryTest {
     }
 
     @Test
-    void 던전_리스트_가져오기() {
+    void 던전_리스트_전체_가져오기() {
         //given
         //when
         List<Dungeon> whens = dungeonRepository.findAll();
