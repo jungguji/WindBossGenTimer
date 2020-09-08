@@ -37,7 +37,7 @@ public class Dungeon {
     private List<GenTime> genTimes;
 
     @Builder
-    public Dungeon(String name, Integer mainChannel, Integer subChannel, User user, List<GenTime> genTimes) {
+    public Dungeon(String name, Integer mainChannel, Integer subChannel, User user) {
         Assert.notNull(name, "name is required");
         Assert.notNull(mainChannel, "main channel is required");
         Assert.notNull(subChannel, "sub channel is required");
@@ -47,7 +47,9 @@ public class Dungeon {
         this.mainChannel = mainChannel;
         this.subChannel = subChannel;
         this.user = user;
-        this.genTimes = genTimes;
     }
 
+    public void addGenTime(GenTime genTime) {
+        this.genTimes.add(genTime);
+    }
 }
