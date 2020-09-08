@@ -74,7 +74,6 @@ class DungeonTest {
                 .mainChannel(main)
                 .subChannel(sub)
                 .user(user)
-                .genTimes(genTimes)
                 .build();
         //then
 

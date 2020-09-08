@@ -1,5 +1,7 @@
 package com.jungguji.windbossgentimer.domain.dungeon;
 
+import com.jungguji.windbossgentimer.domain.gentime.GenTime;
+import com.jungguji.windbossgentimer.domain.gentime.GenTimeRepository;
 import com.jungguji.windbossgentimer.domain.user.User;
 import com.jungguji.windbossgentimer.domain.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +29,9 @@ class DungeonRepositoryTest {
 
     @Autowired
     DungeonRepository dungeonRepository;
+
+    @Autowired
+    GenTimeRepository genTimeRepository;
 
     User user;
     String email = "test@gmail.com";
@@ -129,6 +135,18 @@ class DungeonRepositoryTest {
 
         dungeonRepository.save(given);
 
+        String name = "힘쎈전갈";
+        LocalTime givenLocal = LocalTime.of(3,0);
+        GenTime genTime = GenTime.builder()
+                .bossName(name)
+                .genTime(givenLocal)
+                .dungeon(given)
+                .build();
+
+        genTimeRepository.save(genTime);
+
+        given.addGenTime(genTime);
+
         //when
         List<Dungeon> whens = dungeonRepository.findByUser(user1);
 
@@ -141,6 +159,7 @@ class DungeonRepositoryTest {
         assertEquals(given.getMainChannel(), when.getMainChannel());
         assertEquals(given.getSubChannel(), when.getSubChannel());
         assertEquals(given.getUser().getEmail(), when.getUser().getEmail());
+        assertEquals(name, when.getGenTimes().get(0).getBossName());
     }
 
     @Test
