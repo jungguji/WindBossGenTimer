@@ -13,14 +13,14 @@ public class DungeonDTO {
     public static class MainView {
         private String name;
 
-        public MainView(Dungeon dungeon) {
-            this.name = dungeon.getName();
+        public MainView(String name) {
+            this.name = name;
         }
 
-        public static List<MainView> toMainViewList(List<Dungeon> dungeons) {
+        public static List<MainView> toMainViewList(List<String> dungeons) {
             List<MainView> list = new ArrayList<>();
-            for (Dungeon d : dungeons) {
-                list.add(new MainView(d));
+            for (String name : dungeons) {
+                list.add(new MainView(name));
             }
 
             return list;
