@@ -11,11 +11,9 @@ public class DungeonDTO {
 
     @Getter
     public static class MainView {
-        private Integer id;
         private String name;
 
         public MainView(Dungeon dungeon) {
-            this.id = dungeon.getId();
             this.name = dungeon.getName();
         }
 
