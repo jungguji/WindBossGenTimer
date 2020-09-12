@@ -16,4 +16,8 @@ public class DungeonService {
     public List<Dungeon> findAll() {
         return dungeonRepository.findAll();
     }
+
+    public List<String> findNameByGroupName() {
+        return dungeonRepository.findNameGroupByName();
+    }
 }
