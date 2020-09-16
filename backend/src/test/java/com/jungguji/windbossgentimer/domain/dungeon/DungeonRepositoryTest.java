@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
@@ -173,5 +174,17 @@ class DungeonRepositoryTest {
         assertEquals(1, whens.get(0));
         assertEquals(2, whens.get(1));
         assertEquals(3, whens.get(2));
+    }
+
+    @Test
+    void 메인화면_던전_리스트_이름만() {
+        //given
+        //when
+        List<String> whens = dungeonRepository.findNameGroupByName();
+
+        //then
+        assertEquals(2, whens.size());
+        assertThat(whens).contains(dungeonName1)
+                .contains(dungeonName2);
     }
 }

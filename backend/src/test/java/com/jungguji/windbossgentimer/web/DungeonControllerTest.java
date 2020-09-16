@@ -62,47 +62,17 @@ class DungeonControllerTest {
     }
 
     @Test
-    void 던전_리스트_JSON_리턴() throws Exception {
+    void 던전이름_리스트_JSON_리턴() throws Exception {
         //given
-        Dungeon dungeon1 = Dungeon.builder()
-                .name(dungeonName1)
-                .mainChannel(1)
-                .subChannel(1)
-                .user(user)
-                .build();
-
-        Dungeon dungeon2 = Dungeon.builder()
-                .name(dungeonName2)
-                .mainChannel(1)
-                .subChannel(2)
-                .user(user)
-                .build();
-
-        Dungeon dungeon3 = Dungeon.builder()
-                .name(dungeonName2)
-                .mainChannel(2)
-                .subChannel(1)
-                .user(user)
-                .build();
-
-        Dungeon dungeon4 = Dungeon.builder()
-                .name(dungeonName2)
-                .mainChannel(3)
-                .subChannel(11)
-                .user(user)
-                .build();
-
-        dungeons = Arrays.asList(
-                dungeon1
-                , dungeon2
-                , dungeon3
-                , dungeon4
+        List<String> given = Arrays.asList(
+                dungeonName1
+                , dungeonName2
         );
 
-        given(this.dungeonService.findAll()).willReturn(dungeons);
+        given(this.dungeonService.findNameByGroupName()).willReturn(given);
 
         //when
-        final ResultActions action = mockMvc.perform(get("/all")
+        final ResultActions action = mockMvc.perform(get("/main")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print());
 
@@ -110,5 +80,8 @@ class DungeonControllerTest {
         MvcResult result = action.andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
+
+        String expected = "[{\"name\":\"유령굴\"},{\"name\":\"산적굴\"}]";
+        assertEquals(expected, result.getResponse().getContentAsString());
     }
 }
