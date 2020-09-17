@@ -1,0 +1,44 @@
+## 유저
+INSERT INTO wind_boss_gen_timer.user (email, password) VALUES ('test@gmail.com', 'qwe123');
+
+## 던전
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 01, 01, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 01, 02, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 01, 03, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 02, 01, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 03, 05, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 04, 06, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 07, 07, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '해골굴', 08, 08, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '해골굴', 02, 09, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '해골굴', 13, 10, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 11, 10, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 11, 03, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 11, 02, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 13, 04, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '인형굴', 15, 05, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '인형굴', 15, 06, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '인형굴', 17, 07, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 17, 08, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 19, 09, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 20, 01, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 05, 01, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 05, 02, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 05, 03, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 05, 04, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 05, 05, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '비밀세작의집', 06, 06, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '비밀세작의집', 07, 07, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '비밀세작의집', 08, 08, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '비밀세작의집', 09, 09, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '비밀세작의집', 04, 04, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '비밀세작의집', 01, 01, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '비밀세작의집', 02, 02, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '비밀세작의집', 03, 03, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '비밀세작의집', 04, 04, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '비밀세작의집', 05, 05, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '비밀세작의집', 06, 06, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '비밀세작의집', 07, 07, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '비밀세작의집', 08, 08, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '비밀세작의집', 09, 09, NOW());
+INSERT INTO wind_boss_gen_timer.dungeon (user_id, name, main_channel, sub_channel, kill_time) VALUES (01, '산적굴', 04, 04, NOW());

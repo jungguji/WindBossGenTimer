@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -34,7 +35,7 @@ public class Dungeon {
     private final User user;
 
     @OneToMany(mappedBy = "dungeon")
-    private List<GenTime> genTimes;
+    private List<GenTime> genTimes = new ArrayList<>();
 
     @Builder
     public Dungeon(String name, Integer mainChannel, Integer subChannel, User user) {

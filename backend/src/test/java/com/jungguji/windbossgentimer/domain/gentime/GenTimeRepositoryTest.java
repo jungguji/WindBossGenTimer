@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@TestPropertySource("classpath:application-test.yml")
+@TestPropertySource("classpath:application-test.properties")
 class GenTimeRepositoryTest {
 
     @Autowired

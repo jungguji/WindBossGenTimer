@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(SpringExtension.class)
-@TestPropertySource("classpath:application-test.yml")
+@TestPropertySource("classpath:application-test.properties")
 class DungeonServiceTest {
 
     @MockBean
