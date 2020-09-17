@@ -1,10 +1,11 @@
 CREATE TABLE wind_boss_gen_timer.dungeon
 (
-    `id`            INT     NOT NULL    AUTO_INCREMENT COMMENT '아이디',
-    `user_id`       INT     NOT NULL    COMMENT '유저 id',
-    `main_channel`  INT     NOT NULL    COMMENT '주 채널',
-    `sub_channel`   INT     NOT NULL    COMMENT '서브 채널',
-    `kill_time`     TIME    NULL        COMMENT '보스 죽인 시간',
+    `id`            INT             NOT NULL    AUTO_INCREMENT COMMENT '아이디',
+    `user_id`       INT             NOT NULL    COMMENT '유저 id',
+    `name`          VARCHAR(100)    NOT NULL    COMMENT '던전명',
+    `main_channel`  INT             NOT NULL    COMMENT '주 채널',
+    `sub_channel`   INT             NOT NULL    COMMENT '서브 채널',
+    `kill_time`     TIME            NULL        COMMENT '보스 죽인 시간',
     PRIMARY KEY (id)
 );
 

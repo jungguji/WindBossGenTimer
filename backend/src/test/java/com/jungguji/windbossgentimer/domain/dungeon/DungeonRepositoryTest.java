@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@TestPropertySource("classpath:application-test.yml")
+@TestPropertySource("classpath:application-test.properties")
 class DungeonRepositoryTest {
 
     @Autowired
@@ -97,7 +97,7 @@ class DungeonRepositoryTest {
         List<Dungeon> whens = dungeonRepository.findAll();
 
         //then
-        assertEquals(2, whens.size());
+        assertEquals(4, whens.size());
 
         for (int i = 0; i < 2; i++) {
             Dungeon given = dungeons.get(i);

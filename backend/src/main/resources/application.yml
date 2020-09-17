@@ -1,0 +1,12 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: none
+      dialect: org.hibernate.dialect.MariaDBDialect
+      use-new-id-generator-mappings: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: false
+    show-sql: true
