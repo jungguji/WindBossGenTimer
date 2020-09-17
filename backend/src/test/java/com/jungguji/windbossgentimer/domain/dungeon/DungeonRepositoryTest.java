@@ -75,17 +75,15 @@ class DungeonRepositoryTest {
 
         Dungeon dungeon4 = Dungeon.builder()
                 .name(dungeonName2)
-                .mainChannel(3)
+                .mainChannel(1)
                 .subChannel(11)
                 .user(user)
                 .build();
 
-        dungeons = Arrays.asList(
-                dungeon1
-                , dungeon2
-                , dungeon3
-                , dungeon4
-        );
+        dungeons.add(dungeon1);
+        dungeons.add(dungeon2);
+        dungeons.add(dungeon3);
+        dungeons.add(dungeon4);
 
         dungeonRepository.saveAll(dungeons);
     }
@@ -164,6 +162,18 @@ class DungeonRepositoryTest {
     }
 
     @Test
+    void 메인화면_던전_리스트_이름만() {
+        //given
+        //when
+        List<String> whens = dungeonRepository.findNameGroupByName();
+
+        //then
+        assertEquals(2, whens.size());
+        assertThat(whens).contains(dungeonName1)
+                .contains(dungeonName2);
+    }
+
+    @Test
     void 던전_별_메인채널_리스트_가져오기() {
         //given
         //when
@@ -177,14 +187,26 @@ class DungeonRepositoryTest {
     }
 
     @Test
-    void 메인화면_던전_리스트_이름만() {
+    void 채널별_서브채널_리스트_가져오기() {
         //given
+        Dungeon d1 = Dungeon.builder()
+                .name(dungeonName2)
+                .mainChannel(1)
+                .subChannel(6)
+                .user(user)
+                .build();
+
+        this.dungeonRepository.save(d1);
+
+        dungeons.add(d1);
+
         //when
-        List<String> whens = dungeonRepository.findNameGroupByName();
+        List<Integer> whens = dungeonRepository.findSubChannelByNameAndMainChannel(dungeonName2, 1);
 
         //then
-        assertEquals(2, whens.size());
-        assertThat(whens).contains(dungeonName1)
-                .contains(dungeonName2);
+        assertEquals(3, whens.size());
+        assertEquals(2, whens.get(0));
+        assertEquals(11, whens.get(1));
+        assertEquals(6, whens.get(2));
     }
 }
