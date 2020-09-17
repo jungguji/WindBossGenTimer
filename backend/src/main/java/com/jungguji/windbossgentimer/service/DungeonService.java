@@ -14,10 +14,18 @@ public class DungeonService {
     private final DungeonRepository dungeonRepository;
 
     public List<Dungeon> findAll() {
-        return dungeonRepository.findAll();
+        return this.dungeonRepository.findAll();
     }
 
     public List<String> findNameByGroupName() {
-        return dungeonRepository.findNameGroupByName();
+        return this.dungeonRepository.findNameGroupByName();
+    }
+
+    public List<Integer> findMainChannelByName(String name) {
+        return this.dungeonRepository.findMainChannelByName(name);
+    }
+
+    public List<Integer> findSubChannelByNameAndMainChannel(String name, int mainChannel) {
+        return this.dungeonRepository.findSubChannelByNameAndMainChannel(name, mainChannel);
     }
 }

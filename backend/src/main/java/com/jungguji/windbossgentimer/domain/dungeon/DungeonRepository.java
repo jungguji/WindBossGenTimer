@@ -23,4 +23,7 @@ public interface DungeonRepository extends JpaRepository<Dungeon, Long> {
 
     @Query(value = "SELECT mainChannel FROM Dungeon WHERE name =:name")
     List<Integer> findMainChannelByName(String name);
+
+    @Query(value = "SELECT subChannel FROM Dungeon WHERE name =:name AND mainChannel =:mainChannel")
+    List<Integer> findSubChannelByNameAndMainChannel(String name, int mainChannel);
 }
