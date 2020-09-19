@@ -68,7 +68,7 @@
 
 ## DB 구조
 
-![DB구조](backend/src/main/resources/db/WindBossGenTimer_20200903.PNG)
+![DB구조](backend/src/main/resources/db/WindBossGenTimer_20200919.PNG)
 
 * * *
 
