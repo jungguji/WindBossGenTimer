@@ -1,7 +1,6 @@
 package com.jungguji.windbossgentimer.domain.region;
 
 import com.jungguji.windbossgentimer.domain.dungeon.Dungeon;
-import com.jungguji.windbossgentimer.domain.gentime.GenTime;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.util.Assert;

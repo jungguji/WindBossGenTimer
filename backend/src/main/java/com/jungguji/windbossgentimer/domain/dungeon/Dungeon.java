@@ -1,7 +1,7 @@
 package com.jungguji.windbossgentimer.domain.dungeon;
 
+import com.jungguji.windbossgentimer.domain.boss.Boss;
 import com.jungguji.windbossgentimer.domain.channel.Channel;
-import com.jungguji.windbossgentimer.domain.gentime.GenTime;
 import com.jungguji.windbossgentimer.domain.region.Region;
 import com.jungguji.windbossgentimer.domain.user.User;
 import lombok.Builder;
@@ -30,22 +30,36 @@ public class Dungeon {
     @JoinColumn(name="region_id")
     private final Region region;
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private final User user;
+
     private final String name;
 
-    @OneToMany(mappedBy = "dungeon")
+    @OneToMany(mappedBy = "dungeon1")
     private List<Channel> channels = new ArrayList<>();
 
+    @OneToMany(mappedBy = "dungeon2")
+    private List<Boss> bosses = new ArrayList<>();
+
     @Builder
-    public Dungeon(String name, Region region, List<Channel> channels) {
+    public Dungeon(String name, Region region, User user, List<Channel> channels, List<Boss> bosses) {
         Assert.notNull(name, "name is required");
         Assert.notNull(region, "region is required");
+        Assert.notNull(user, "user is required");
 
         this.name = name;
         this.region = region;
-        this.channels =channels;
+        this.user = user;
+        this.channels = channels;
+        this.bosses = bosses;
     }
 
     public void addChannel(Channel channel) {
         this.channels.add(channel);
+    }
+
+    public void addChannel(Boss boss) {
+        this.bosses.add(boss);
     }
 }

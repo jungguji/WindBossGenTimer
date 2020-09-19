@@ -1,7 +1,6 @@
 package com.jungguji.windbossgentimer.domain.user;
 
 import com.jungguji.windbossgentimer.domain.channel.Channel;
-import com.jungguji.windbossgentimer.domain.dungeon.Dungeon;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
