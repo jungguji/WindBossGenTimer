@@ -1,6 +1,8 @@
 package com.jungguji.windbossgentimer.domain.dungeon;
 
+import com.jungguji.windbossgentimer.domain.channel.Channel;
 import com.jungguji.windbossgentimer.domain.gentime.GenTime;
+import com.jungguji.windbossgentimer.domain.region.Region;
 import com.jungguji.windbossgentimer.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,32 +26,26 @@ public class Dungeon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private final String name;
-    private final Integer mainChannel;
-    private final Integer subChannel;
-    private LocalTime killTime;
-
     @ManyToOne
-    @JoinColumn(name="user_id")
-    private final User user;
+    @JoinColumn(name="region_id")
+    private final Region region;
+
+    private final String name;
 
     @OneToMany(mappedBy = "dungeon")
-    private List<GenTime> genTimes = new ArrayList<>();
+    private List<Channel> channels = new ArrayList<>();
 
     @Builder
-    public Dungeon(String name, Integer mainChannel, Integer subChannel, User user) {
+    public Dungeon(String name, Region region, List<Channel> channels) {
         Assert.notNull(name, "name is required");
-        Assert.notNull(mainChannel, "main channel is required");
-        Assert.notNull(subChannel, "sub channel is required");
-        Assert.notNull(user, "user is required");
+        Assert.notNull(region, "region is required");
 
         this.name = name;
-        this.mainChannel = mainChannel;
-        this.subChannel = subChannel;
-        this.user = user;
+        this.region = region;
+        this.channels =channels;
     }
 
-    public void addGenTime(GenTime genTime) {
-        this.genTimes.add(genTime);
+    public void addChannel(Channel channel) {
+        this.channels.add(channel);
     }
 }

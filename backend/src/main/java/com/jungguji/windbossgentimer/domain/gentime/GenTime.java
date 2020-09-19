@@ -21,7 +21,7 @@ public class GenTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private final String bossName;
-    private final LocalTime genTime;
+    private LocalTime genTime;
 
     @ManyToOne
     @JoinColumn(name="dungeon_id")
