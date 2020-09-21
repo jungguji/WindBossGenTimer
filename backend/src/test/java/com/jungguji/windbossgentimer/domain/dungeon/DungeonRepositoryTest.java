@@ -1,7 +1,9 @@
 package com.jungguji.windbossgentimer.domain.dungeon;
 
-import com.jungguji.windbossgentimer.domain.gentime.GenTime;
-import com.jungguji.windbossgentimer.domain.gentime.GenTimeRepository;
+import com.jungguji.windbossgentimer.domain.channel.Channel;
+import com.jungguji.windbossgentimer.domain.channel.ChannelRepository;
+import com.jungguji.windbossgentimer.domain.region.Region;
+import com.jungguji.windbossgentimer.domain.region.RegionRepository;
 import com.jungguji.windbossgentimer.domain.user.User;
 import com.jungguji.windbossgentimer.domain.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +16,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,7 +33,10 @@ class DungeonRepositoryTest {
     DungeonRepository dungeonRepository;
 
     @Autowired
-    GenTimeRepository genTimeRepository;
+    RegionRepository regionRepository;
+
+    @Autowired
+    ChannelRepository channelRepository;
 
     User user;
     String email = "test@gmail.com";
@@ -40,6 +44,8 @@ class DungeonRepositoryTest {
 
     String dungeonName1 = "유령굴";
     String dungeonName2 = "산적굴";
+    String dungeonName3 = "인형굴";
+    String dungeonName4 = "말왕굴";
 
     List<Dungeon> dungeons = new ArrayList<>();
 
@@ -52,31 +58,31 @@ class DungeonRepositoryTest {
 
         userRepository.save(user);
 
+        Region region1 = createRegion("국내성");
+        Region region2 = createRegion("산적소굴");
+        Region region3 = createRegion("12지신");
+
         Dungeon dungeon1 = Dungeon.builder()
                 .name(dungeonName1)
-                .mainChannel(1)
-                .subChannel(1)
+                .region(region1)
                 .user(user)
                 .build();
 
         Dungeon dungeon2 = Dungeon.builder()
                 .name(dungeonName2)
-                .mainChannel(1)
-                .subChannel(2)
+                .region(region2)
                 .user(user)
                 .build();
 
         Dungeon dungeon3 = Dungeon.builder()
-                .name(dungeonName2)
-                .mainChannel(2)
-                .subChannel(1)
+                .name(dungeonName3)
+                .region(region1)
                 .user(user)
                 .build();
 
         Dungeon dungeon4 = Dungeon.builder()
-                .name(dungeonName2)
-                .mainChannel(1)
-                .subChannel(11)
+                .name(dungeonName4)
+                .region(region3)
                 .user(user)
                 .build();
 
@@ -86,6 +92,16 @@ class DungeonRepositoryTest {
         dungeons.add(dungeon4);
 
         dungeonRepository.saveAll(dungeons);
+    }
+
+    private Region createRegion(String name) {
+        Region region = Region.builder()
+                .name(name)
+                .build();
+
+
+        this.regionRepository.save(region);
+        return region;
     }
 
     @Test
@@ -102,8 +118,7 @@ class DungeonRepositoryTest {
             Dungeon when = whens.get(i);
 
             assertEquals(given.getName(), when.getName());
-            assertEquals(given.getMainChannel(), when.getMainChannel());
-            assertEquals(given.getSubChannel(), when.getSubChannel());
+            assertEquals(given.getRegion(), when.getRegion());
             assertEquals(given.getUser().getEmail(), when.getUser().getEmail());
         }
     }
@@ -127,8 +142,6 @@ class DungeonRepositoryTest {
 
         Dungeon given = Dungeon.builder()
                 .name(dname)
-                .mainChannel(mc)
-                .subChannel(sm)
                 .user(user1)
                 .build();
 
@@ -136,15 +149,6 @@ class DungeonRepositoryTest {
 
         String name = "힘쎈전갈";
         LocalTime givenLocal = LocalTime.of(3,0);
-        GenTime genTime = GenTime.builder()
-                .bossName(name)
-                .genTime(givenLocal)
-                .dungeon(given)
-                .build();
-
-        genTimeRepository.save(genTime);
-
-        given.addGenTime(genTime);
 
         //when
         List<Dungeon> whens = dungeonRepository.findByUser(user1);
@@ -155,10 +159,7 @@ class DungeonRepositoryTest {
         Dungeon when = whens.get(0);
 
         assertEquals(given.getName(), when.getName());
-        assertEquals(given.getMainChannel(), when.getMainChannel());
-        assertEquals(given.getSubChannel(), when.getSubChannel());
         assertEquals(given.getUser().getEmail(), when.getUser().getEmail());
-        assertEquals(name, when.getGenTimes().get(0).getBossName());
     }
 
     @Test
@@ -176,37 +177,38 @@ class DungeonRepositoryTest {
     @Test
     void 던전_별_메인채널_리스트_가져오기() {
         //given
-        //when
-        List<Integer> whens = dungeonRepository.findMainChannelByName(dungeonName2);
+        int main = 1;
+        int sub = 7;
 
+        for (Dungeon d : dungeons) {
+            d.addChannel(createChannel(main, sub, d));
+        }
+
+        Dungeon d = dungeons.get(1);
+
+        d.addChannel(createChannel(2, sub, d));
+        d.addChannel(createChannel(3, sub, d));
+        d.addChannel(createChannel(4, sub, d));
+
+        this.dungeonRepository.saveAll(dungeons);
+        //when
+
+        List<Integer> whens = this.dungeonRepository.findMainChannelById(2);
         //then
-        assertEquals(3, whens.size());
-        assertEquals(1, whens.get(0));
-        assertEquals(2, whens.get(1));
-        assertEquals(3, whens.get(2));
+
+        assertThat(whens).isNotIn(5)
+                .contains(1,2,3,4);
     }
 
-    @Test
-    void 채널별_서브채널_리스트_가져오기() {
-        //given
-        Dungeon d1 = Dungeon.builder()
-                .name(dungeonName2)
-                .mainChannel(1)
-                .subChannel(6)
-                .user(user)
+    private Channel createChannel(int main, int sub, Dungeon d) {
+        Channel c = Channel.builder()
+                .mainChannel(main)
+                .subChannel(sub)
+                .dungeon(d)
                 .build();
 
-        this.dungeonRepository.save(d1);
+        this.channelRepository.save(c);
 
-        dungeons.add(d1);
-
-        //when
-        List<Integer> whens = dungeonRepository.findSubChannelByNameAndMainChannel(dungeonName2, 1);
-
-        //then
-        assertEquals(3, whens.size());
-        assertEquals(2, whens.get(0));
-        assertEquals(11, whens.get(1));
-        assertEquals(6, whens.get(2));
+        return c;
     }
 }

@@ -55,29 +55,21 @@ class DungeonServiceTest {
         //given
         Dungeon dungeon1 = Dungeon.builder()
                 .name(dungeonName1)
-                .mainChannel(1)
-                .subChannel(1)
                 .user(user)
                 .build();
 
         Dungeon dungeon2 = Dungeon.builder()
                 .name(dungeonName2)
-                .mainChannel(1)
-                .subChannel(2)
                 .user(user)
                 .build();
 
         Dungeon dungeon3 = Dungeon.builder()
                 .name(dungeonName2)
-                .mainChannel(2)
-                .subChannel(1)
                 .user(user)
                 .build();
 
         Dungeon dungeon4 = Dungeon.builder()
                 .name(dungeonName2)
-                .mainChannel(3)
-                .subChannel(11)
                 .user(user)
                 .build();
 
@@ -99,8 +91,6 @@ class DungeonServiceTest {
             Dungeon w = whens.get(i);
 
             assertEquals(d.getName(), w.getName());
-            assertEquals(d.getMainChannel(), w.getMainChannel());
-            assertEquals(d.getSubChannel(), w.getSubChannel());
             assertEquals(d.getUser(), w.getUser());
         }
     }
