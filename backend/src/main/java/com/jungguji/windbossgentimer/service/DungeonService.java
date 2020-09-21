@@ -5,6 +5,7 @@ import com.jungguji.windbossgentimer.domain.dungeon.DungeonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -21,11 +22,11 @@ public class DungeonService {
         return this.dungeonRepository.findNameGroupByName();
     }
 
-    public List<Integer> findMainChannelByName(String name) {
-        return this.dungeonRepository.findMainChannelByName(name);
+    public List<Integer> findMainChannelById(Integer id) {
+        List<Integer> mainChannels = this.dungeonRepository.findMainChannelById(id);
+        Collections.sort(mainChannels);
+
+        return mainChannels;
     }
 
-    public List<Integer> findSubChannelByNameAndMainChannel(String name, int mainChannel) {
-        return this.dungeonRepository.findSubChannelByNameAndMainChannel(name, mainChannel);
-    }
 }
