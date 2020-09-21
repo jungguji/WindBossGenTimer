@@ -24,7 +24,7 @@ public interface DungeonRepository extends JpaRepository<Dungeon, Long> {
 
     @Query(value = ""
             + "SELECT                   "
-            + "    c.mainChannel        "
+            + "    DISTINCT c.mainChannel        "
             + "FROM                     "
             + "    Dungeon d            "
             + "INNER JOIN Channel c     "
