@@ -36,14 +36,14 @@ public class Dungeon {
 
     private final String name;
 
-    @OneToMany(mappedBy = "dungeon1")
+    @OneToMany(mappedBy = "dungeon")
     private List<Channel> channels = new ArrayList<>();
 
-    @OneToMany(mappedBy = "dungeon2")
+    @OneToMany(mappedBy = "dungeon")
     private List<Boss> bosses = new ArrayList<>();
 
     @Builder
-    public Dungeon(String name, Region region, User user, List<Channel> channels, List<Boss> bosses) {
+    public Dungeon(String name, Region region, User user) {
         Assert.notNull(name, "name is required");
         Assert.notNull(region, "region is required");
         Assert.notNull(user, "user is required");
@@ -51,15 +51,13 @@ public class Dungeon {
         this.name = name;
         this.region = region;
         this.user = user;
-        this.channels = channels;
-        this.bosses = bosses;
     }
 
     public void addChannel(Channel channel) {
         this.channels.add(channel);
     }
 
-    public void addChannel(Boss boss) {
+    public void addBoss(Boss boss) {
         this.bosses.add(boss);
     }
 }
