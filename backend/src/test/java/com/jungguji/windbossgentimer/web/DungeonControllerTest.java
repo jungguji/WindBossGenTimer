@@ -1,11 +1,8 @@
 package com.jungguji.windbossgentimer.web;
 
-import com.jungguji.windbossgentimer.domain.dungeon.Dungeon;
 import com.jungguji.windbossgentimer.domain.user.User;
 import com.jungguji.windbossgentimer.domain.user.UserRepository;
 import com.jungguji.windbossgentimer.service.DungeonService;
-import com.jungguji.windbossgentimer.web.dto.DungeonDTO;
-import com.jungguji.windbossgentimer.web.dto.DungeonDTO.MainView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +13,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -39,6 +36,9 @@ class DungeonControllerTest {
     @MockBean
     DungeonService dungeonService;
 
+    @MockBean
+    private ChannelController channelController;
+
     DungeonController dungeonController;
 
     User user;
@@ -47,8 +47,6 @@ class DungeonControllerTest {
 
     String dungeonName1 = "유령굴";
     String dungeonName2 = "산적굴";
-
-    List<Dungeon> dungeons = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
@@ -82,6 +80,31 @@ class DungeonControllerTest {
                 .andReturn();
 
         String expected = "[{\"name\":\"유령굴\"},{\"name\":\"산적굴\"}]";
+        assertEquals(expected, result.getResponse().getContentAsString());
+    }
+
+    @Test
+    void findMainChannelById() throws Exception {
+        //given
+        Integer id = 1;
+
+        List<Integer> givens = Arrays.asList(
+                1,2,3,4,5,6,7,13,20
+        );
+
+        given(this.dungeonService.findMainChannelById(any())).willReturn(givens);
+
+        //when
+        final ResultActions action = this.mockMvc.perform(get("/dungeon/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print());
+
+        //then
+        MvcResult result = action.andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        String expected = "[1,2,3,4,5,6,7,13,20]";
         assertEquals(expected, result.getResponse().getContentAsString());
     }
 }

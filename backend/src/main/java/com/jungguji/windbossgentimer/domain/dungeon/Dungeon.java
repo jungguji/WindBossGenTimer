@@ -6,9 +6,11 @@ import com.jungguji.windbossgentimer.domain.region.Region;
 import com.jungguji.windbossgentimer.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 @Entity
 public class Dungeon {
 
@@ -26,24 +29,24 @@ public class Dungeon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="region_id")
-    private final Region region;
+    private Region region;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
-    private final User user;
+    private User user;
 
-    private final String name;
+    private String name;
 
-    @OneToMany(mappedBy = "dungeon1")
+    @OneToMany(mappedBy = "dungeon")
     private List<Channel> channels = new ArrayList<>();
 
-    @OneToMany(mappedBy = "dungeon2")
+    @OneToMany(mappedBy = "dungeon")
     private List<Boss> bosses = new ArrayList<>();
 
     @Builder
-    public Dungeon(String name, Region region, User user, List<Channel> channels, List<Boss> bosses) {
+    public Dungeon(String name, Region region, User user) {
         Assert.notNull(name, "name is required");
         Assert.notNull(region, "region is required");
         Assert.notNull(user, "user is required");
@@ -51,15 +54,13 @@ public class Dungeon {
         this.name = name;
         this.region = region;
         this.user = user;
-        this.channels = channels;
-        this.bosses = bosses;
     }
 
     public void addChannel(Channel channel) {
         this.channels.add(channel);
     }
 
-    public void addChannel(Boss boss) {
+    public void addBoss(Boss boss) {
         this.bosses.add(boss);
     }
 }

@@ -4,9 +4,11 @@ import com.jungguji.windbossgentimer.domain.dungeon.Dungeon;
 import com.jungguji.windbossgentimer.domain.killtime.KillTime;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,18 +19,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 @Entity
 public class Channel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="dungeon_id")
-    private final Dungeon dungeon;
-
-    private final Integer mainChannel;
-    private final Integer subChannel;
+    private Dungeon dungeon;
+    private Integer mainChannel;
+    private Integer subChannel;
 
     @OneToMany(mappedBy = "channel")
     private List<KillTime> killTimes = new ArrayList<>();

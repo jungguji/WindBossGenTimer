@@ -3,6 +3,7 @@ package com.jungguji.windbossgentimer.domain.dungeon;
 import com.jungguji.windbossgentimer.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface DungeonRepository extends JpaRepository<Dungeon, Long> {
 
     List<Dungeon> findByUser(User user);
 
-    @Query(value=""
+    @Query(value = ""
             + "SELECT        "
             + "   name       "
             + "FROM          "
@@ -21,6 +22,14 @@ public interface DungeonRepository extends JpaRepository<Dungeon, Long> {
             + "   name       ")
     List<String> findNameGroupByName();
 
-    @Query(value = "SELECT mainChannel FROM Dungeon WHERE name =:name")
-    List<Integer> findMainChannelByName(String name);
+    @Query(value = ""
+            + "SELECT                   "
+            + "    DISTINCT c.mainChannel        "
+            + "FROM                     "
+            + "    Dungeon d            "
+            + "INNER JOIN Channel c     "
+            + "ON d.id = c.dungeon      "
+            + "WHERE                    "
+            + "    d.id = :id           ")
+    List<Integer> findMainChannelById(@Param("id") Integer id);
 }
