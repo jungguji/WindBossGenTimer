@@ -1,9 +1,9 @@
 package com.jungguji.windbossgentimer.domain.user;
 
-import com.jungguji.windbossgentimer.domain.channel.Channel;
+import com.jungguji.windbossgentimer.domain.dungeon.Dungeon;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
 import javax.persistence.Entity;
@@ -16,30 +16,29 @@ import java.util.List;
 
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private final String email;
-    private final String password;
+    private String email;
+    private String password;
 
     @OneToMany(mappedBy = "user")
-    private List<Channel> channels = new ArrayList<>();
+    private List<Dungeon> dungeons = new ArrayList<>();
 
     @Builder
-    public User(String email, String password, List<Channel> channels) {
+    public User(String email, String password) {
         Assert.hasText(email, "email is required");
         Assert.hasText(password, "password is required");
 
         this.email = email;
         this.password = password;
-        this.channels = channels;
     }
 
-    public void addChannel(Channel channel) {
-        this.channels.add(channel);
+    public void addDungeon(Dungeon dungeon) {
+        this.dungeons.add(dungeon);
     }
 }
