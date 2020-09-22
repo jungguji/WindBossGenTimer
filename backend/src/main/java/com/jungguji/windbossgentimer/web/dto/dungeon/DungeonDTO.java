@@ -1,7 +1,5 @@
-package com.jungguji.windbossgentimer.web.dto;
+package com.jungguji.windbossgentimer.web.dto.dungeon;
 
-import com.jungguji.windbossgentimer.domain.dungeon.Dungeon;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.util.ArrayList;
