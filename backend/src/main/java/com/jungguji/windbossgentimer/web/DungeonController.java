@@ -1,7 +1,7 @@
 package com.jungguji.windbossgentimer.web;
 
 import com.jungguji.windbossgentimer.service.DungeonService;
-import com.jungguji.windbossgentimer.web.dto.DungeonDTO;
+import com.jungguji.windbossgentimer.web.dto.dungeon.DungeonDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
