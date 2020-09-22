@@ -4,6 +4,7 @@ import com.jungguji.windbossgentimer.domain.dungeon.Dungeon;
 import com.jungguji.windbossgentimer.domain.killtime.KillTime;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 @Entity
 public class Boss {
 
@@ -27,23 +29,22 @@ public class Boss {
 
     @ManyToOne
     @JoinColumn(name="dungeon_id")
-    private final Dungeon dungeon;
+    private Dungeon dungeon;
 
-    private final String name;
+    private String name;
     private LocalTime genTime;
 
     @OneToMany(mappedBy = "boss")
     private List<KillTime> killTimes = new ArrayList<>();
 
     @Builder
-    public Boss(Dungeon dungeon, String name, LocalTime genTime, List<KillTime> killTimes) {
+    public Boss(Dungeon dungeon, String name, LocalTime genTime) {
         Assert.notNull(dungeon, "dungeon is required");
         Assert.notNull(name, "name is required");
 
         this.dungeon = dungeon;
         this.name = name;
         this.genTime = genTime;
-        this.killTimes = killTimes;
     }
 
     public void addKillTime(KillTime killTime) {
