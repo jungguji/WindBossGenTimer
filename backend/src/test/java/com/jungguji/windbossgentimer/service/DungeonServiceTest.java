@@ -2,6 +2,8 @@ package com.jungguji.windbossgentimer.service;
 
 import com.jungguji.windbossgentimer.domain.dungeon.Dungeon;
 import com.jungguji.windbossgentimer.domain.dungeon.DungeonRepository;
+import com.jungguji.windbossgentimer.domain.region.Region;
+import com.jungguji.windbossgentimer.domain.region.RegionRepository;
 import com.jungguji.windbossgentimer.domain.user.User;
 import com.jungguji.windbossgentimer.domain.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +30,9 @@ class DungeonServiceTest {
     @MockBean
     UserRepository userRepository;
 
+    @MockBean
+    RegionRepository regionRepository;
+
     DungeonService service;
 
     User user;
@@ -38,6 +43,9 @@ class DungeonServiceTest {
     String dungeonName2 = "산적굴";
 
     List<Dungeon> dungeons = new ArrayList<>();
+
+    Region region;
+
     @BeforeEach
     void setUp() {
         service = new DungeonService(dungeonRepository);
@@ -48,6 +56,20 @@ class DungeonServiceTest {
                 .build();
 
         userRepository.save(user);
+
+        region = createRegion("부여성");
+
+    }
+
+    private Region createRegion(String name) {
+        Region region = Region.builder()
+                .name(name)
+                .build();
+
+
+        given(this.regionRepository.save(region)).willReturn(region);
+
+        return region;
     }
 
     @Test
@@ -56,21 +78,25 @@ class DungeonServiceTest {
         Dungeon dungeon1 = Dungeon.builder()
                 .name(dungeonName1)
                 .user(user)
+                .region(region)
                 .build();
 
         Dungeon dungeon2 = Dungeon.builder()
                 .name(dungeonName2)
                 .user(user)
+                .region(region)
                 .build();
 
         Dungeon dungeon3 = Dungeon.builder()
                 .name(dungeonName2)
                 .user(user)
+                .region(region)
                 .build();
 
         Dungeon dungeon4 = Dungeon.builder()
                 .name(dungeonName2)
                 .user(user)
+                .region(region)
                 .build();
 
         dungeons = Arrays.asList(

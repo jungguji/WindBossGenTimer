@@ -143,6 +143,7 @@ class DungeonRepositoryTest {
         Dungeon given = Dungeon.builder()
                 .name(dname)
                 .user(user1)
+                .region(createRegion("국내성"))
                 .build();
 
         dungeonRepository.save(given);
@@ -169,7 +170,7 @@ class DungeonRepositoryTest {
         List<String> whens = dungeonRepository.findNameGroupByName();
 
         //then
-        assertEquals(2, whens.size());
+        assertEquals(4, whens.size());
         assertThat(whens).contains(dungeonName1)
                 .contains(dungeonName2);
     }
@@ -177,25 +178,60 @@ class DungeonRepositoryTest {
     @Test
     void 던전_별_메인채널_리스트_가져오기() {
         //given
+        Region region1 = createRegion("국내성");
+        Region region2 = createRegion("산적소굴");
+        Region region3 = createRegion("12지신");
+
+        Dungeon dungeon1 = Dungeon.builder()
+                .name(dungeonName1)
+                .region(region1)
+                .user(user)
+                .build();
+
+        Dungeon dungeon2 = Dungeon.builder()
+                .name(dungeonName2)
+                .region(region2)
+                .user(user)
+                .build();
+
+        Dungeon dungeon3 = Dungeon.builder()
+                .name(dungeonName3)
+                .region(region1)
+                .user(user)
+                .build();
+
+        Dungeon dungeon4 = Dungeon.builder()
+                .name(dungeonName4)
+                .region(region3)
+                .user(user)
+                .build();
+
+        List<Dungeon> givenDungeons = new ArrayList<>();
+
+        givenDungeons.add(dungeon1);
+        givenDungeons.add(dungeon2);
+        givenDungeons.add(dungeon3);
+        givenDungeons.add(dungeon4);
+
         int main = 1;
         int sub = 7;
 
-        for (Dungeon d : dungeons) {
+        for (Dungeon d : givenDungeons) {
             d.addChannel(createChannel(main, sub, d));
         }
 
-        Dungeon d = dungeons.get(1);
+        Dungeon d = givenDungeons.get(1);
 
         d.addChannel(createChannel(2, sub, d));
         d.addChannel(createChannel(3, sub, d));
         d.addChannel(createChannel(4, sub, d));
 
-        this.dungeonRepository.saveAll(dungeons);
+        this.dungeonRepository.saveAll(givenDungeons);
+
         //when
+        List<Integer> whens = this.dungeonRepository.findMainChannelById(10);
 
-        List<Integer> whens = this.dungeonRepository.findMainChannelById(2);
         //then
-
         assertThat(whens).isNotIn(5)
                 .contains(1,2,3,4);
     }

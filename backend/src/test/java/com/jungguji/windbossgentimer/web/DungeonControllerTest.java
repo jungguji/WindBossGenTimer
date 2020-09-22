@@ -36,6 +36,9 @@ class DungeonControllerTest {
     @MockBean
     DungeonService dungeonService;
 
+    @MockBean
+    private ChannelController channelController;
+
     DungeonController dungeonController;
 
     User user;
