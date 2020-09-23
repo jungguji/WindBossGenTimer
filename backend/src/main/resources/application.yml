@@ -10,3 +10,5 @@ spring:
         format_sql: true
         use_sql_comments: false
     show-sql: true
+server:
+  port: 9312
