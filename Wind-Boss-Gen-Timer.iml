@@ -8,11 +8,12 @@
       <sourceFolder url="file://$MODULE_DIR$/backend/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/backend/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/backend/src/test/resources" type="java-test-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/frontend/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/node/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.mariadb.jdbc:mariadb-java-client:2.6.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-data-jpa:2.3.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-aop:2.3.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.2.8.RELEASE" level="project" />

@@ -14,11 +14,6 @@ import java.util.List;
 public class DungeonController {
     private final DungeonService dungeonService;
 
-    @GetMapping(value="/main", produces = "application/json")
-    public List<DungeonDTO.MainView> findNameByGroupName() {
-        return DungeonDTO.MainView.toMainViewList(dungeonService.findNameByGroupName());
-    }
-
     @GetMapping("/dungeon/{id}")
     public List<Integer> findMainChannelById(@PathVariable("id") Integer id) {
         return this.dungeonService.findMainChannelById(id);
