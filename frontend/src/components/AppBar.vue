@@ -19,15 +19,15 @@
           </v-row>
           <v-list-group
             v-else-if="item.dungeons"
-            :key="item.text"
+            :key="item.name"
             v-model="item.model"
-            :prepend-icon="item.model ? item.icon : item['icon-alt']"
+            :prepend-icon="item.model ? chevronUp : chevronDown"
             append-icon=""
           >
             <template v-slot:activator>
               <v-list-item-content>
                 <v-list-item-title>
-                  {{ item.text }}
+                  {{ item.name }}
                 </v-list-item-title>
               </v-list-item-content>
             </template>
@@ -36,7 +36,7 @@
               :key="dungeon.name"
               @click="popupChannel(1)"
             >
-              <v-icon> mdi-cog </v-icon>
+              <v-icon> mdi-alpha-d-circle-outline </v-icon>
               <v-list-item-content>
                 <v-list-item-title>
                   {{ dungeon.name }}
@@ -44,16 +44,6 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
-          <v-list-item v-else :key="item.text" link>
-            <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>
-                {{ item.text }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
         </template>
       </v-list>
     </v-navigation-drawer>
@@ -97,11 +87,10 @@ export default {
   data: () => ({
     dialog: false,
     drawer: null,
+    chevronUp: "mdi-chevron-up",
+    chevronDown: "mdi-chevron-down",
     items: [
       {
-        icon: "mdi-chevron-up",
-        "icon-alt": "mdi-chevron-down",
-        text: "던전 리스트",
         model: false,
         dungeons: []
       }
@@ -116,7 +105,7 @@ export default {
     api
       .requestMainView()
       .then(response => {
-        this.items[0].dungeons = response.data;
+        this.items = response.data;
         console.log(response.data);
       })
       .catch(e => {
