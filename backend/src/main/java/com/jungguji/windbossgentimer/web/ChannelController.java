@@ -2,6 +2,7 @@ package com.jungguji.windbossgentimer.web;
 
 import com.jungguji.windbossgentimer.domain.channel.Channel;
 import com.jungguji.windbossgentimer.service.ChannelService;
+import com.jungguji.windbossgentimer.web.dto.channel.ChannelDTO.ChannelListResponse;
 import com.jungguji.windbossgentimer.web.dto.channel.SubChannelListResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,12 @@ import java.util.List;
 @RestController
 public class ChannelController {
     private final ChannelService channelService;
+
+    @GetMapping("/dungeon/{dungeonId}")
+    public List<ChannelListResponse> findByDungeonId(@PathVariable("dungeonId") Integer dungeonId) {
+        List<Channel> channels = this.channelService.findByDungeonId(dungeonId);
+        return new ChannelListResponse().convert(channels);
+    }
 
     @GetMapping("/dungeon/{dungeonId}/{main}")
     public List<SubChannelListResponseDTO> findByDungeonIdAndMainChannel(@PathVariable("dungeonId") Integer dungeonId

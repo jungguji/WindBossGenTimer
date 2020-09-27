@@ -7,18 +7,7 @@
     >
       <v-list dense>
         <template v-for="item in items">
-          <v-row v-if="item.heading" :key="item.heading" align="center">
-            <v-col cols="6">
-              <v-subheader v-if="item.heading">
-                {{ item.heading }}
-              </v-subheader>
-            </v-col>
-            <v-col cols="6" class="text-center">
-              <a href="#!" class="body-2 black--text">EDIT</a>
-            </v-col>
-          </v-row>
           <v-list-group
-            v-else-if="item.dungeons"
             :key="item.name"
             v-model="item.model"
             :prepend-icon="item.model ? chevronUp : chevronDown"
@@ -34,7 +23,7 @@
             <v-list-item
               v-for="dungeon in item.dungeons"
               :key="dungeon.name"
-              @click="popupChannel(1)"
+              @click="requestChannels(dungeon.id)"
             >
               <v-icon> mdi-alpha-d-circle-outline </v-icon>
               <v-list-item-content>
@@ -97,7 +86,7 @@ export default {
     ]
   }),
   methods: {
-    popupChannel(id) {
+    requestChannels(id) {
       this.$router.push(`/dungeon/${id}`);
     }
   },
