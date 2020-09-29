@@ -26,5 +26,9 @@ public class ChannelService {
         channels.sort(Comparator.comparing(Channel::getSubChannel));
         return channels;
     }
+
+    public Channel findById(int id) {
+        return this.channelRepository.findById(id);
+    }
 }
 

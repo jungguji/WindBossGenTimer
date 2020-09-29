@@ -1,10 +1,12 @@
 package com.jungguji.windbossgentimer.web.dto.channel;
 
 import com.jungguji.windbossgentimer.domain.channel.Channel;
+import com.jungguji.windbossgentimer.domain.killtime.KillTime;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -61,6 +63,26 @@ public class ChannelDTO {
         public SubChannel(int id, int subChannel) {
             this.id = id;
             this.subChannel = subChannel;
+        }
+    }
+
+    @Getter
+    @NoArgsConstructor
+    public static class responseBossList {
+        private String bossName;
+        private LocalTime remainTime;
+        private LocalTime killTime;
+
+        public responseBossList(KillTime killTime) {
+            String bossName = killTime.getBoss().getName();
+            LocalTime kTime = killTime.getKillTime();
+            LocalTime genTime = killTime.getBoss().getGenTime();
+            LocalTime remainTime = kTime.plusHours(genTime.getHour()).plusMinutes(genTime.getMinute()).plusSeconds(genTime.getSecond())
+                    .minusHours(LocalTime.now().getHour()).minusMinutes(LocalTime.now().getMinute()).minusSeconds(LocalTime.now().getSecond());
+
+            this.bossName = bossName;
+            this.remainTime = remainTime;
+            this.killTime = kTime;
         }
     }
 }
