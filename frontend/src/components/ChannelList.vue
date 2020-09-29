@@ -43,7 +43,21 @@
             :items="bosses.bosses"
             :items-per-page="5"
             class="elevation-1"
-          ></v-data-table>
+          >
+            <template v-slot:[`item.bossName`]="{ item }">
+              <v-edit-dialog>
+                <template>
+                  <v-text-field
+                    v-model="item.bossName"
+                    :rules="[max25chars]"
+                    label="Edit"
+                    single-line
+                    counter
+                  ></v-text-field>
+                </template>
+              </v-edit-dialog>
+            </template>
+          </v-data-table>
         </div>
       </v-sheet>
     </v-bottom-sheet>
@@ -58,6 +72,7 @@ export default {
   data: function() {
     return {
       sheet: false,
+      max25chars: v => v.length <= 25 || "Input too long!",
       channels: [],
       headers: [
         {
