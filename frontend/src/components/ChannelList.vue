@@ -18,7 +18,11 @@
                   v-for="subChannel in channel.subChannels"
                   :key="subChannel.id"
                 >
-                  <v-btn large color="primary">
+                  <v-btn
+                    large
+                    color="primary"
+                    @click="getBoss($route.params.id, subChannel.id)"
+                  >
                     {{ subChannel.subChannel }}</v-btn
                   >
                 </div>
@@ -28,23 +32,54 @@
         </v-card>
       </v-row>
     </v-container>
+    <v-bottom-sheet v-model="sheet">
+      <v-sheet class="text-center" height="500px">
+        <v-btn class="mt-6" text color="red" @click="sheet = !sheet">
+          close
+        </v-btn>
+        <div class="py-3">
+          <v-data-table
+            :headers="headers"
+            :items="bosses.bosses"
+            :items-per-page="5"
+            class="elevation-1"
+          ></v-data-table>
+        </div>
+      </v-sheet>
+    </v-bottom-sheet>
   </div>
 </template>
 
 <script>
-import api from "../apis/channel_api.js";
+import { requestChannels } from "../apis/channel_api";
 
 export default {
   name: "ChannelList",
   data: function() {
     return {
-      channels: []
+      sheet: false,
+      channels: [],
+      headers: [
+        {
+          text: "보스명",
+          align: "start",
+          sortable: false,
+          value: "bossName"
+        },
+        { text: "남은 시간", value: "remainTime" },
+        { text: "죽인 시간", value: "killTime" }
+      ]
     };
+  },
+  methods: {
+    getBoss(dungeonId, channelId) {
+      this.sheet = !this.sheet;
+      this.$store.dispatch("QUERY_BOSS", { dungeonId, channelId });
+    }
   },
   mounted() {
     let id = this.$route.params.id;
-    api
-      .requestChannels(id)
+    requestChannels(id)
       .then(response => {
         this.channels = response.data;
         console.log(response.data);
@@ -52,6 +87,11 @@ export default {
       .catch(e => {
         this.errors.push(e);
       });
+  },
+  computed: {
+    bosses() {
+      return this.$store.state.bosses;
+    }
   }
 };
 </script>
