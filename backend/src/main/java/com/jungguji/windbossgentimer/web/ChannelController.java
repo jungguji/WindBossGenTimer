@@ -24,17 +24,6 @@ public class ChannelController {
         return new ChannelListResponse().convert(channels);
     }
 
-//    @GetMapping("/dungeon/{dungeonId}/{main}")
-//    public List<SubChannelListResponseDTO> findByDungeonIdAndMainChannel(@PathVariable("dungeonId") Integer dungeonId
-//            , @PathVariable("main") Integer mainChannel) {
-//        List<Channel> channels = this.channelService.findByDungeonIdAndMainChannel(dungeonId, mainChannel);
-//
-//        SubChannelListResponseDTO dto = new SubChannelListResponseDTO();
-//        List<SubChannelListResponseDTO> subChannelList = dto.convertChannelListToSubChannelListResponseList(channels);
-//
-//        return subChannelList;
-//    }
-
     @GetMapping("/dungeon/{dungeonId}/{id}")
     public List<responseBossList> findById(@PathVariable("id") Integer id) {
         Channel channel = this.channelService.findById(id);
