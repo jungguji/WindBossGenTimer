@@ -1,7 +1,7 @@
 import { requestBoss } from "../apis/channel_api.js";
 
 const state = {
-  bosses: ""
+  bosses: []
 };
 
 const mutations = {
