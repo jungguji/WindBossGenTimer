@@ -44,20 +44,40 @@
             :items-per-page="5"
             class="elevation-1"
           >
-            <template v-slot:[`item.bossName`]="{ item }">
-              <v-edit-dialog>
-                <template>
-                  <v-text-field
-                    v-model="item.bossName"
-                    :rules="[max25chars]"
-                    label="Edit"
-                    single-line
-                    counter
-                  ></v-text-field>
-                </template>
-              </v-edit-dialog>
+            <template v-slot:[`item.killTime`]="props">
+              <td class="text-xs-right">
+                <v-edit-dialog
+                  :return-value.sync="props.item.killTime"
+                  lazy
+                  large
+                  persistent
+                  @save="save"
+                  @cancel="cancel"
+                  @open="open"
+                  @close="close"
+                >
+                  {{ props.item.killTime }}
+                  <template v-slot:[`input`]>
+                    <v-text-field
+                      v-model="props.item.killTime"
+                      single-line
+                      counter
+                    ></v-text-field>
+                  </template>
+                </v-edit-dialog>
+              </td>
             </template>
           </v-data-table>
+
+          <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
+            {{ snackText }}
+
+            <template v-slot:action="{ attrs }">
+              <v-btn v-bind="attrs" text @click="snack = false">
+                Close
+              </v-btn>
+            </template>
+          </v-snackbar>
         </div>
       </v-sheet>
     </v-bottom-sheet>
@@ -71,6 +91,9 @@ export default {
   name: "ChannelList",
   data: function() {
     return {
+      snack: false,
+      snackColor: "",
+      snackText: "",
       sheet: false,
       max25chars: v => v.length <= 25 || "Input too long!",
       channels: [],
@@ -90,6 +113,24 @@ export default {
     getBoss(dungeonId, channelId) {
       this.sheet = !this.sheet;
       this.$store.dispatch("QUERY_BOSS", { dungeonId, channelId });
+    },
+    save() {
+      this.snack = true;
+      this.snackColor = "success";
+      this.snackText = "Data saved";
+    },
+    cancel() {
+      this.snack = true;
+      this.snackColor = "error";
+      this.snackText = "Canceled";
+    },
+    open() {
+      this.snack = true;
+      this.snackColor = "info";
+      this.snackText = "Dialog opened";
+    },
+    close() {
+      console.log("Dialog closed");
     }
   },
   mounted() {
