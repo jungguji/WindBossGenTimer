@@ -31,8 +31,9 @@ public class ChannelController {
         List<responseBossList> responseBossLists = new ArrayList<>();
 
         List<KillTime> killTimes = channel.getKillTimes();
+        int i = 0;
         for (KillTime k : killTimes) {
-            responseBossLists.add(new responseBossList(k));
+            responseBossLists.add(new responseBossList(k, i++));
         }
 
         return responseBossLists;
