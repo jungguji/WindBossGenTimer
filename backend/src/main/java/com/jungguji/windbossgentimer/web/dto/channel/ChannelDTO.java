@@ -89,9 +89,9 @@ public class ChannelDTO {
             genTimeMap.put("second", genTime.getSecond());
 
             Map<String, Integer>  killTimeMap = new HashMap<>();
-            killTimeMap.put("hour", genTime.getHour());
-            killTimeMap.put("minute", genTime.getMinute());
-            killTimeMap.put("second", genTime.getSecond());
+            killTimeMap.put("hour", kTime.getHour());
+            killTimeMap.put("minute", kTime.getMinute());
+            killTimeMap.put("second", kTime.getSecond());
 
             this.rowId = rowId;
             this.killTimeId = killTimeId;
