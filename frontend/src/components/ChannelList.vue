@@ -44,6 +44,15 @@
             :items-per-page="5"
             class="elevation-1"
           >
+            <template v-slot:[`item.remainTime`]="{ item }">
+              <div class="my-cursor">
+                <span> {{ rotlqkf[0].minute }} </span> :
+                <span> {{ rotlqkf[0].second }} </span>
+                <span class="ml-1" style="display: none">
+                  {{ item.remainTime }}
+                </span>
+              </div>
+            </template>
             <template v-slot:[`item.killTime`]="props">
               <td class="text-xs-right">
                 <v-edit-dialog
@@ -51,18 +60,16 @@
                   lazy
                   large
                   persistent
-                  @save="save"
+                  @save="save(props.item.killTimeId, props.item.killTime)"
                   @cancel="cancel"
                   @open="open"
                   @close="close"
                 >
-                  {{ props.item.killTime }}
+                  {{ props.item.killTime.hour }} :
+                  {{ props.item.killTime.minute }} :
+                  {{ props.item.killTime.second }}
                   <template v-slot:[`input`]>
-                    <v-text-field
-                      v-model="props.item.killTime"
-                      single-line
-                      counter
-                    ></v-text-field>
+                    <v-text-field single-line counter></v-text-field>
                   </template>
                 </v-edit-dialog>
               </td>
@@ -97,6 +104,7 @@ export default {
       sheet: false,
       max25chars: v => v.length <= 25 || "Input too long!",
       channels: [],
+      test: 100,
       headers: [
         {
           text: "보스명",
@@ -106,18 +114,78 @@ export default {
         },
         { text: "남은 시간", value: "remainTime" },
         { text: "죽인 시간", value: "killTime" }
-      ]
+      ],
+      polling: null,
+      hour: "00",
+      minute: "00",
+      rotlqkf: [{hour: "00", minute: "00", second: "00"}],
+
     };
   },
   methods: {
     getBoss(dungeonId, channelId) {
       this.sheet = !this.sheet;
       this.$store.dispatch("QUERY_BOSS", { dungeonId, channelId });
+
+      let genTime = [];
+      let killTime = [];
+      for (var ttt in this.$store.state.bosses.bosses) {
+        genTime[ttt] = this.$store.state.bosses.bosses[ttt].genTime;
+
+        killTime[ttt] = this.$store.state.bosses.bosses[ttt].killTime;
+      }
+
+      for (var i = 0; i < this.$store.state.bosses.bosses.length; i++) {
+        let current = new Date();
+        current.setSeconds(
+          killTime[i].second - current.getSeconds() + genTime[i].second
+        );
+
+        current.setMinutes(
+          killTime[i].minute - current.getMinutes() + genTime[i].minute
+        );
+
+        current.setHours(
+          killTime[i].hour - current.getHours() + genTime[i].hour
+        );
+
+        const remain = {
+          hour: current.getHours(),
+          minute: current.getMinutes(),
+          second: current.getSeconds()
+        };
+
+        this.rotlqkf[i] = remain;
+      }
+
+      this.polling = setInterval(() => this.countdown(), 1000);
     },
-    save() {
+    countdown: function() {
+      //const length = this.remainTime.length;
+
+      if (this.rotlqkf[0].second >= 1) {
+        this.rotlqkf[0].second--;
+        this.$set(this.rotlqkf[0], "second", this.rotlqkf[0].second);
+        this.$set(this.rotlqkf, 1, this.rotlqkf[0]);
+        console.log(this.rotlqkf[0].second);
+      } else {
+        this.rotlqkf[0].second = 0;
+        this.timeStop();
+        console.log(this.rotlqkf[0].second);
+      }
+    },
+    timeStop() {
+      console.log("끝남");
+      clearInterval(this.polling);
+    },
+    padTime: function(time) {
+      return (time < 10 ? "0" : "") + time;
+    },
+    save(id, killTime) {
       this.snack = true;
       this.snackColor = "success";
       this.snackText = "Data saved";
+      alert(id + " " + killTime);
     },
     cancel() {
       this.snack = true;
@@ -138,7 +206,6 @@ export default {
     requestChannels(id)
       .then(response => {
         this.channels = response.data;
-        console.log(response.data);
       })
       .catch(e => {
         this.errors.push(e);
