@@ -32,9 +32,9 @@
         </v-card>
       </v-row>
     </v-container>
-    <v-bottom-sheet v-model="sheet">
+    <v-bottom-sheet v-model="sheet" persistent>
       <v-sheet class="text-center" height="500px">
-        <v-btn class="mt-6" text color="red" @click="sheet = !sheet">
+        <v-btn class="mt-6" text color="red" @click="screenClose">
           close
         </v-btn>
         <div class="py-3">
@@ -46,8 +46,8 @@
           >
             <template v-slot:[`item.remainTime`]="{ item }">
               <div class="my-cursor">
-                <span> {{ rotlqkf[0].minute }} </span> :
-                <span> {{ rotlqkf[0].second }} </span>
+                <span> {{ remain[item.rowId].minute }} </span> :
+                <span> {{ remain[item.rowId].second }} </span>
                 <span class="ml-1" style="display: none">
                   {{ item.remainTime }}
                 </span>
@@ -104,7 +104,6 @@ export default {
       sheet: false,
       max25chars: v => v.length <= 25 || "Input too long!",
       channels: [],
-      test: 100,
       headers: [
         {
           text: "보스명",
@@ -115,11 +114,8 @@ export default {
         { text: "남은 시간", value: "remainTime" },
         { text: "죽인 시간", value: "killTime" }
       ],
-      polling: null,
-      hour: "00",
-      minute: "00",
-      rotlqkf: [{hour: "00", minute: "00", second: "00"}],
-
+      polling: [],
+      remain: [{ hour: "00", minute: "00", second: "00" }]
     };
   },
   methods: {
@@ -129,13 +125,13 @@ export default {
 
       let genTime = [];
       let killTime = [];
-      for (var ttt in this.$store.state.bosses.bosses) {
-        genTime[ttt] = this.$store.state.bosses.bosses[ttt].genTime;
 
-        killTime[ttt] = this.$store.state.bosses.bosses[ttt].killTime;
-      }
+      const length = this.$store.state.bosses.bosses.length;
 
-      for (var i = 0; i < this.$store.state.bosses.bosses.length; i++) {
+      for (let i = 0; i < length; i++) {
+        genTime[i] = this.$store.state.bosses.bosses[i].genTime;
+        killTime[i] = this.$store.state.bosses.bosses[i].killTime;
+
         let current = new Date();
         current.setSeconds(
           killTime[i].second - current.getSeconds() + genTime[i].second
@@ -149,34 +145,41 @@ export default {
           killTime[i].hour - current.getHours() + genTime[i].hour
         );
 
-        const remain = {
+        const calculatedTime = {
           hour: current.getHours(),
           minute: current.getMinutes(),
           second: current.getSeconds()
         };
 
-        this.rotlqkf[i] = remain;
+        this.remain[i] = calculatedTime;
       }
 
-      this.polling = setInterval(() => this.countdown(), 1000);
+      for (let i = 0; i < length; i++) {
+        this.polling[i] = setInterval(() => this.countdown(i), 1000);
+      }
     },
-    countdown: function() {
-      //const length = this.remainTime.length;
+    countdown: function(i) {
+      if (this.remain[i].second >= 1) {
+        this.remain[i].second--;
+        this.$set(this.remain[i], "second", this.remain[i].second);
 
-      if (this.rotlqkf[0].second >= 1) {
-        this.rotlqkf[0].second--;
-        this.$set(this.rotlqkf[0], "second", this.rotlqkf[0].second);
-        this.$set(this.rotlqkf, 1, this.rotlqkf[0]);
-        console.log(this.rotlqkf[0].second);
+        console.log(this.remain[i].second);
       } else {
-        this.rotlqkf[0].second = 0;
-        this.timeStop();
-        console.log(this.rotlqkf[0].second);
+        if (this.remain[i].minute >= 0) {
+          this.remain[i].minute--;
+          this.$set(this.remain[i], "minute", this.remain[i].minute);
+          this.remain[i].second = 59;
+        } else {
+          this.remain[i].second = 0;
+          this.timeStop(i);
+        }
       }
+
+      this.$set(this.remain, i, this.remain[i]);
     },
-    timeStop() {
+    timeStop(i) {
       console.log("끝남");
-      clearInterval(this.polling);
+      clearInterval(this.polling[i]);
     },
     padTime: function(time) {
       return (time < 10 ? "0" : "") + time;
@@ -199,6 +202,12 @@ export default {
     },
     close() {
       console.log("Dialog closed");
+    },
+    screenClose() {
+      this.sheet = !this.sheet;
+      for (let i = 0; i < this.remain.length; i++) {
+        this.timeStop(i);
+      }
     }
   },
   mounted() {
