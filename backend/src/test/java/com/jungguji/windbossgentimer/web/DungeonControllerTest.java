@@ -50,7 +50,7 @@ class DungeonControllerTest {
 
     @BeforeEach
     void setUp() {
-        dungeonController = new DungeonController(dungeonService);
+        dungeonController = new DungeonController();
         user = User.builder()
                 .email(email)
                 .password(pw)

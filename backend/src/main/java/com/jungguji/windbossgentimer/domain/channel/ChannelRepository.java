@@ -7,4 +7,5 @@ import java.util.List;
 public interface ChannelRepository extends JpaRepository<Channel, Long> {
     List<Channel> findByDungeonId(Integer id);
     List<Channel> findByDungeonIdAndMainChannel(Integer id, Integer mainChannel);
+    Channel findById(Integer id);
 }
