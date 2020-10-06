@@ -178,7 +178,6 @@ export default {
       this.$set(this.remain, i, this.remain[i]);
     },
     timeStop(i) {
-      console.log("끝남");
       clearInterval(this.polling[i]);
     },
     padTime: function(time) {
