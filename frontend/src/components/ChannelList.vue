@@ -56,20 +56,22 @@
             <template v-slot:[`item.killTime`]="props">
               <td class="text-xs-right">
                 <v-edit-dialog
-                  :return-value.sync="props.item.killTime"
+                  :return-value.sync="props.item.realKillTime"
                   lazy
                   large
                   persistent
-                  @save="save(props.item.killTimeId, props.item.killTime)"
+                  @save="save(props.item.killTimeId, props.item.realKillTime)"
                   @cancel="cancel"
                   @open="open"
                   @close="close"
                 >
-                  {{ props.item.killTime.hour }} :
-                  {{ props.item.killTime.minute }} :
-                  {{ props.item.killTime.second }}
+                  {{ props.item.realKillTime }}
                   <template v-slot:[`input`]>
-                    <v-text-field single-line counter></v-text-field>
+                    <v-text-field
+                      v-model="props.item.realKillTime"
+                      single-line
+                      counter
+                    ></v-text-field>
                   </template>
                 </v-edit-dialog>
               </td>
@@ -187,7 +189,8 @@ export default {
       this.snack = true;
       this.snackColor = "success";
       this.snackText = "Data saved";
-      alert(id + " " + killTime);
+      console.log(" tetsetset " + killTime);
+      this.$store.dispatch("UPDATE_KILLTIME", { id, killTime });
     },
     cancel() {
       this.snack = true;

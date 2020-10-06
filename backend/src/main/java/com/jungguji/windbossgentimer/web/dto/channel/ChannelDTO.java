@@ -76,6 +76,7 @@ public class ChannelDTO {
         private String bossName;
         private Map<String, Integer> genTime;
         private Map<String, Integer> killTime;
+        private LocalTime realKillTime;
 
         public responseBossList(KillTime killTime, int rowId) {
             Integer killTimeId = killTime.getId();
@@ -98,6 +99,7 @@ public class ChannelDTO {
             this.bossName = bossName;
             this.genTime = genTimeMap;
             this.killTime = killTimeMap;
+            this.realKillTime = kTime;
         }
     }
 }
