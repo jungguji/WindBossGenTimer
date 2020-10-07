@@ -38,4 +38,8 @@ public class KillTime {
         this.boss = boss;
         this.killTime = killTime;
     }
+
+    public void update(LocalTime killTime) {
+        this.killTime = killTime;
+    }
 }
