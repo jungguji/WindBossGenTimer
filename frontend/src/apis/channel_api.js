@@ -10,4 +10,17 @@ function requestBoss(params) {
   );
 }
 
-export { requestChannels, requestBoss };
+function requestUpdateKillTime(args) {
+  return AXIOS.put(
+    `${process.env.VUE_APP_BASEURL}/dungeon/${args.dungeonId}/${args.channelId}`,
+    {
+      params: {
+        killTimeId: args.killTimeid,
+        bossId: args.bossId,
+        killTime: args.killTime
+      }
+    }
+  );
+}
+
+export { requestChannels, requestBoss, requestUpdateKillTime };

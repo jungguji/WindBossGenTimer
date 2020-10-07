@@ -60,7 +60,13 @@
                   lazy
                   large
                   persistent
-                  @save="save(props.item.killTimeId, props.item.realKillTime)"
+                  @save="
+                    save(
+                      props.item.killTimeId,
+                      props.item.bossId,
+                      props.item.realKillTime
+                    )
+                  "
                   @cancel="cancel"
                   @open="open"
                   @close="close"
@@ -185,12 +191,12 @@ export default {
     padTime: function(time) {
       return (time < 10 ? "0" : "") + time;
     },
-    save(id, killTime) {
+    save(killTimeid, bossId, killTime) {
+      this.$store.dispatch("UPDATE_KILLTIME", { killTimeid, bossId, killTime });
+
       this.snack = true;
       this.snackColor = "success";
       this.snackText = "Data saved";
-      console.log(" tetsetset " + killTime);
-      this.$store.dispatch("UPDATE_KILLTIME", { id, killTime });
     },
     cancel() {
       this.snack = true;

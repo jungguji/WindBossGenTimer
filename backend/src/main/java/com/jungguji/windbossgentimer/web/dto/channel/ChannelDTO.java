@@ -73,6 +73,7 @@ public class ChannelDTO {
     public static class responseBossList {
         private Integer rowId;
         private Integer killTimeId;
+        private Integer bossId;
         private String bossName;
         private Map<String, Integer> genTime;
         private Map<String, Integer> killTime;
@@ -96,6 +97,7 @@ public class ChannelDTO {
 
             this.rowId = rowId;
             this.killTimeId = killTimeId;
+            this.bossId = killTime.getBoss().getId();
             this.bossName = bossName;
             this.genTime = genTimeMap;
             this.killTime = killTimeMap;

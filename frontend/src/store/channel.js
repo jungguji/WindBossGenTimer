@@ -1,4 +1,4 @@
-import { requestBoss } from "../apis/channel_api.js";
+import { requestBoss, requestUpdateKillTime } from "../apis/channel_api.js";
 
 const state = {
   bosses: []
@@ -16,6 +16,14 @@ const actions = {
       const response = await requestBoss(params);
       context.commit("GET_BOSS_LIST", response.data);
       return response.data;
+    } catch (e) {
+      alert(e, e.response);
+    }
+  },
+
+  async UPDATE_KILLTIME(context, params) {
+    try {
+      await requestUpdateKillTime(params);
     } catch (e) {
       alert(e, e.response);
     }
