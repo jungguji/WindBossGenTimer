@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class KillTimeController {
     private final KillTimeService killTimeService;
 
-    @PutMapping("/dungeon/{dungeonId}/{id}")
-    public ResponseEntity update(@PathVariable("id") Long channelId
-            , @RequestParam("killTimeId") Long killTimeId
+    @PutMapping("/dungeon/{dungeonId}/{channelId}")
+    public ResponseEntity update(@PathVariable("channelId") Long channelId
+            , @RequestParam("killTimeId") String killTimeId
             , @RequestParam("bossId") Long bossId
             , @RequestParam("killTime") Long killTimes) {
 

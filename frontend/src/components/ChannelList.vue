@@ -112,6 +112,7 @@ export default {
       sheet: false,
       max25chars: v => v.length <= 25 || "Input too long!",
       channels: [],
+      channelId: "",
       headers: [
         {
           text: "보스명",
@@ -128,6 +129,7 @@ export default {
   },
   methods: {
     getBoss(dungeonId, channelId) {
+      this.channelId = channelId;
       this.sheet = !this.sheet;
       this.$store.dispatch("QUERY_BOSS", { dungeonId, channelId });
 
@@ -191,8 +193,15 @@ export default {
     padTime: function(time) {
       return (time < 10 ? "0" : "") + time;
     },
-    save(killTimeid, bossId, killTime) {
-      this.$store.dispatch("UPDATE_KILLTIME", { killTimeid, bossId, killTime });
+    save(killTimeId, bossId, killTime) {
+      const channelId = this.channelId;
+
+      this.$store.dispatch("UPDATE_KILLTIME", {
+        channelId,
+        killTimeId,
+        bossId,
+        killTime
+      });
 
       this.snack = true;
       this.snackColor = "success";

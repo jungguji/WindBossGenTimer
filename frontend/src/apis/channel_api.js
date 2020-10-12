@@ -13,9 +13,10 @@ function requestBoss(params) {
 function requestUpdateKillTime(args) {
   return AXIOS.put(
     `${process.env.VUE_APP_BASEURL}/dungeon/${args.dungeonId}/${args.channelId}`,
+    "",
     {
       params: {
-        killTimeId: args.killTimeid,
+        killTimeId: args.killTimeId,
         bossId: args.bossId,
         killTime: args.killTime
       }
