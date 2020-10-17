@@ -62,6 +62,18 @@
 
 ![메인화면](backend/src/main/resources/static/images/mainview.PNG)
 
+### 사이드바 던전 선택 메뉴
+
+![던전 선택 메뉴](https://user-images.githubusercontent.com/20533433/96331031-ebab2c00-1094-11eb-907a-f356a97f9c9d.png)
+
+### 채널 선택
+
+![채널 선택](https://user-images.githubusercontent.com/20533433/96331074-4f355980-1095-11eb-9b12-723dc4b59799.png)
+
+### 보스 리스트
+
+![보스 리스트](https://user-images.githubusercontent.com/20533433/96331042-0f6e7200-1095-11eb-9bd7-32d1fe50c656.png)
+
 * * *
 <br />
 <br />
