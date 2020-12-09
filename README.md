@@ -93,6 +93,8 @@
 - Vue.js
 - MaraiDB
 - H2 DB
+
+## 적용 예정 기술
 - Travis CI
 - Codacy
 - AWS
